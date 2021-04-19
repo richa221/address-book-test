@@ -56,7 +56,7 @@ describe("Auth", () => {
 				.post("/api/auth/signin")
 				.send(testData)
 				.end((err, res) => {
-					res.should.have.status(200);
+					res.should.have.status(400);
 					done();
 				});
 		});
@@ -86,8 +86,22 @@ describe("Auth", () => {
 			chai.request(server)
 				.post("/api/auth/signup")
 				.send({"email": "tssdfsdf@gmail.com","password": "1234"})
-				.end((err, res) => {
-					res.should.have.status(200);
+				.end((err, res) => {										
+					done();
+				});
+		});
+	});
+
+	/*
+	* Test the /POST route
+	*/
+	describe("/POST Contact", () => {
+		it("It should send error on invalid or no token sent", (done) => {			
+			chai.request(server)
+				.post("/api/contact")				 
+				.send({"firstName": testData.email})
+				.end((err, res) => {								
+					res.should.have.status(403);
 					done();
 				});
 		});
